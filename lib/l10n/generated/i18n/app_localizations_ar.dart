@@ -79,4 +79,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get resetPass => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get system => 'النظام';
+
+  @override
+  String get english => 'الإنجليزية';
+
+  @override
+  String get arabic => 'العربية';
+
+  @override
+  String get light => 'فاتح';
+
+  @override
+  String get dark => 'داكن';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get profile => 'الحساب';
+
+  @override
+  String get love => 'المفضلة';
+
+  @override
+  String get map => 'الخريطة';
+
+  @override
+  String get home => 'الرئيسية';
 }

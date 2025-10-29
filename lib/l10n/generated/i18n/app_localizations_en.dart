@@ -79,4 +79,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetPass => 'Reset Password';
+
+  @override
+  String get system => 'System';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get arabic => 'Arabic';
+
+  @override
+  String get light => 'Light';
+
+  @override
+  String get dark => 'dark';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get love => 'Love';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get home => 'Home';
 }

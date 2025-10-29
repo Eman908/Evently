@@ -149,7 +149,17 @@ class RegisterForm extends StatelessWidget {
                             email: emailText.text,
                             password: passwordText.text,
                           );
+
                           if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 3),
+                                content: Text(
+                                  'Verification email sent! Please check your inbox.',
+                                ),
+                              ),
+                            );
+
                             Navigator.of(context).pop();
                           }
                         } on FirebaseAuthException catch (e) {

@@ -21,6 +21,12 @@ abstract class AppTheme {
         foregroundColor: AppColors.purple,
       ),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.purple,
+      selectedItemColor: AppColors.white,
+      unselectedItemColor: AppColors.white,
+    ),
+
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: AppColors.purple),
       titleMedium: TextStyle(color: AppColors.purple),
@@ -83,6 +89,7 @@ abstract class AppTheme {
       disabledBorder: borderDecoration(color: AppColors.gray),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppColors.purple,
       elevation: 0,
     ),
   );
@@ -99,6 +106,11 @@ abstract class AppTheme {
       onError: AppColors.white,
       surface: AppColors.darkBlue,
       onSurface: AppColors.purple,
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.darkBlue,
+      selectedItemColor: AppColors.white,
+      unselectedItemColor: AppColors.white,
     ),
 
     textTheme: const TextTheme(
@@ -162,6 +174,7 @@ abstract class AppTheme {
       disabledBorder: borderDecoration(color: AppColors.gray),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppColors.darkBlue,
       elevation: 0,
     ),
   );

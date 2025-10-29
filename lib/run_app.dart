@@ -5,6 +5,8 @@ import 'package:evently/views/auth/forget_password_view.dart';
 import 'package:evently/views/auth/login_view.dart';
 import 'package:evently/views/auth/register_view.dart';
 import 'package:evently/views/home/home_view.dart';
+import 'package:evently/views/management_event/create_event_view.dart';
+import 'package:evently/views/management_event/provider/event_provider.dart';
 import 'package:evently/views/onboarding/intro_view.dart';
 import 'package:evently/views/onboarding/on_boarding_view.dart';
 import 'package:evently/views/onboarding/provider/toggle_provider.dart';
@@ -17,8 +19,15 @@ class Evently extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => ToggleProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ToggleProvider>(
+          create: (context) => ToggleProvider(),
+        ),
+        ChangeNotifierProvider<EventProvider>(
+          create: (context) => EventProvider(),
+        ),
+      ],
       builder: (context, child) {
         var provider = Provider.of<ToggleProvider>(context);
         return MaterialApp(
@@ -28,6 +37,7 @@ class Evently extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           theme: AppTheme.lightTheme,
           themeMode: provider.appTheme,
+
           routes: {
             AppRoutes.splashRoute: (context) => const SplashView(),
             AppRoutes.onBoardingRoute: (context) => const OnBoardingView(),
@@ -35,10 +45,10 @@ class Evently extends StatelessWidget {
             AppRoutes.loginRoute: (context) => const LoginView(),
             AppRoutes.registerRoute: (context) => const RegisterView(),
             AppRoutes.homeRoute: (context) => const HomeView(),
+            AppRoutes.createEventRoute: (context) => const CreateEventView(),
             AppRoutes.forgetPasswordRoute:
                 (context) => const ForgetPasswordView(),
           },
-          initialRoute: AppRoutes.loginRoute,
         );
       },
     );

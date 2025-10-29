@@ -22,5 +22,15 @@
     "name": "Name",
     "rePassword": "Re Password",
     "alreadyHave": "Already Have Account ? ",
-    "resetPass": "Reset Password"
+    "resetPass": "Reset Password",
+    "system": "System",
+    "english": "English",
+    "arabic": "Arabic",
+    "light": "Light",
+    "dark": "dark",
+    "logout": "Logout",
+    "profile": "Profile",
+    "love": "Love",
+    "map": "Map",
+    "home": "Home"
 }

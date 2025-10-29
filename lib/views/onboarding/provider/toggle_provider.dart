@@ -21,6 +21,10 @@ class ToggleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isEn(BuildContext context) {
+    return appLanguage == "en";
+  }
+
   bool isDark(BuildContext context) {
     switch (appTheme) {
       case ThemeMode.light:

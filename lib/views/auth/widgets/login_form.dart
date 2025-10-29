@@ -10,11 +10,11 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<bool> isPassword = ValueNotifier<bool>(true);
-    GlobalKey<FormState> formKey = GlobalKey();
-    TextEditingController emailText = TextEditingController();
-    TextEditingController passwordText = TextEditingController();
-    ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+    final ValueNotifier<bool> isPassword = ValueNotifier(true);
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final TextEditingController emailText = TextEditingController();
+    final TextEditingController passwordText = TextEditingController();
+    final ValueNotifier<bool> isLoading = ValueNotifier(false);
 
     return Form(
       key: formKey,
@@ -32,11 +32,9 @@ class LoginForm extends StatelessWidget {
               if (!RegExp(
                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
               ).hasMatch(value)) {
-                return "Invalid Email";
+                return "Invalid email format";
               }
-              {
-                return null;
-              }
+              return null;
             },
           ),
           const SizedBox(height: 16),
@@ -50,18 +48,15 @@ class LoginForm extends StatelessWidget {
                 textInputType: TextInputType.visiblePassword,
                 isPassword: value,
                 suffixIcon: InkWell(
-                  onTap: () {
-                    isPassword.value = !value;
-                  },
+                  onTap: () => isPassword.value = !value,
                   child: Icon(
                     isPassword.value ? Icons.visibility : Icons.visibility_off,
                   ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "This can't be empty";
+                    return "This field can't be empty";
                   }
-
                   return null;
                 },
               );
@@ -84,43 +79,58 @@ class LoginForm extends StatelessWidget {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () async {
+                      if (isLoading.value) return;
+                      if (!formKey.currentState!.validate()) return;
+
                       isLoading.value = true;
-                      if (formKey.currentState!.validate()) {
-                        try {
-                          await FirebaseService().loginUser(
-                            email: emailText.text,
-                            password: passwordText.text,
+                      try {
+                        final userCredential = await FirebaseService()
+                            .loginUser(
+                              email: emailText.text.trim(),
+                              password: passwordText.text,
+                            );
+
+                        final user = userCredential.user;
+                        if (user != null && !user.emailVerified) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Please verify your email before logging in.",
+                              ),
+                            ),
                           );
-                          if (context.mounted) {
-                            Navigator.of(
-                              context,
-                            ).pushReplacementNamed(AppRoutes.homeRoute);
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'No user found for that email.',
-                                  ),
-                                ),
-                              );
-                            }
-                          } else if (e.code == 'wrong-password') {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Wrong password provided for that user.',
-                                  ),
-                                ),
-                              );
-                            }
-                          }
-                        } finally {
-                          isLoading.value = false;
+                          await user.sendEmailVerification();
+                          await FirebaseAuth.instance.signOut();
+                          return;
                         }
+
+                        if (context.mounted) {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.homeRoute);
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'wrong-password') {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Wrong password for this user.'),
+                            ),
+                          );
+                        } else if (e.code == 'invalid-email') {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Invalid email address.'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Login failed: ${e.message}'),
+                            ),
+                          );
+                        }
+                      } finally {
+                        if (context.mounted) isLoading.value = false;
                       }
                     },
                     child:

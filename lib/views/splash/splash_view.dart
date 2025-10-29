@@ -29,7 +29,7 @@ class _SplashViewState extends State<SplashView>
       if (mounted) {
         var loggedIn = FirebaseService().isLoggedIn();
         String initialRoute =
-            loggedIn ? AppRoutes.onBoardingRoute : AppRoutes.homeRoute;
+            loggedIn ? AppRoutes.homeRoute : AppRoutes.onBoardingRoute;
         Navigator.pushReplacementNamed(context, initialRoute);
       }
     });
