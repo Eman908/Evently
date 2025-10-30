@@ -32,5 +32,14 @@
     "profile": "Profile",
     "love": "Love",
     "map": "Map",
-    "home": "Home"
+    "home": "Home",
+    "welcome": "Welcome Back",
+    "create_event": "Create Event",
+    "title": "Title",
+    "event_title": "Event Title",
+    "description": "Description",
+    "event_description": "Event Description",
+    "event_date": "Event Date",
+    "event_time": "Event Time",
+    "add_event": "Add Event"
 }

@@ -32,5 +32,14 @@
     "profile": "الحساب",
     "love": "المفضلة",
     "map": "الخريطة",
-    "home": "الرئيسية"
+    "home": "الرئيسية",
+    "welcome": "مرحبا بك",
+    "create_event": "إنشاء حدث",
+    "title": "العنوان",
+    "event_title": "عنوان الحدث",
+    "description": "الوصف",
+    "event_description": "وصف الحدث",
+    "event_date": "تاريخ الحدث",
+    "event_time": "وقت الحدث",
+    "add_event": "إضافة الحدث"
 }

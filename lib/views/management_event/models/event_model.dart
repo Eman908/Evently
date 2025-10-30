@@ -5,6 +5,7 @@ class EventModel {
   String title, description, id;
   int categoryId;
   int date, time;
+  bool favoriteEvent;
 
   EventModel({
     required this.categoryId,
@@ -13,6 +14,7 @@ class EventModel {
     required this.id,
     required this.time,
     required this.title,
+    this.favoriteEvent = false,
   });
 
   factory EventModel.fromFirestore(
@@ -27,6 +29,7 @@ class EventModel {
       id: data?['id'],
       time: data?['time'],
       title: data?['title'],
+      favoriteEvent: data?['favoriteEvent'],
     );
   }
 
@@ -38,6 +41,7 @@ class EventModel {
       "time": time,
       "title": title,
       "description": description,
+      "favoriteEvent": favoriteEvent,
     };
   }
 

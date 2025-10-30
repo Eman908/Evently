@@ -35,4 +35,15 @@ class ToggleProvider extends ChangeNotifier {
         return MediaQuery.of(context).platformBrightness == Brightness.dark;
     }
   }
+
+  int themeNow() {
+    switch (appTheme) {
+      case ThemeMode.light:
+        return 1;
+      case ThemeMode.dark:
+        return 2;
+      case ThemeMode.system:
+        return 3;
+    }
+  }
 }

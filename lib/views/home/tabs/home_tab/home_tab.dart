@@ -1,5 +1,6 @@
 import 'package:evently/core/helper_methods.dart';
 import 'package:evently/firebase/event_data_base.dart';
+import 'package:evently/l10n/generated/i18n/app_localizations.dart';
 import 'package:evently/views/home/provider/bottom_nav_provider.dart';
 import 'package:evently/views/home/tabs/home_tab/widgets/home_tab_bar.dart';
 import 'package:evently/views/management_event/models/event_model.dart';
@@ -51,7 +52,7 @@ class HomeTab extends StatelessWidget {
                       spacing: 8,
                       children: [
                         Text(
-                          "Welcome Back ✨",
+                          "${AppLocalizations.of(context)!.welcome} ✨",
                           style: theme.textTheme.bodyLarge!.copyWith(
                             color: theme.colorScheme.onPrimary,
                           ),
@@ -70,11 +71,13 @@ class HomeTab extends StatelessWidget {
                     const Spacer(),
                     IconButton(
                       onPressed: () {
-                        provider.changeTheme(
-                          provider.isDark(context)
-                              ? ThemeMode.light
-                              : ThemeMode.dark,
-                        );
+                        if (provider.themeNow() == 1) {
+                          provider.changeTheme(ThemeMode.dark);
+                        } else if (provider.themeNow() == 2) {
+                          provider.changeTheme(ThemeMode.system);
+                        } else {
+                          provider.changeTheme(ThemeMode.light);
+                        }
                       },
                       style: IconButton.styleFrom(
                         side: BorderSide(
@@ -85,12 +88,15 @@ class HomeTab extends StatelessWidget {
                         ),
                       ),
                       icon: Icon(
-                        provider.isDark(context)
-                            ? Icons.dark_mode
-                            : Icons.light_mode,
                         color: Colors.white,
+                        provider.themeNow() == 1
+                            ? Icons.light_mode
+                            : provider.themeNow() == 2
+                            ? Icons.dark_mode
+                            : Icons.brightness_auto,
                       ),
                     ),
+
                     InkWell(
                       onTap: () {
                         provider.changeLanguage(
@@ -134,15 +140,19 @@ class HomeTab extends StatelessWidget {
             ),
           ),
         ),
-        FutureBuilder(
-          future: eventDataBase.getEvent(selected),
+        StreamBuilder(
+          stream: eventDataBase.getEventStream(
+            selected,
+            FirebaseAuth.instance.currentUser!.uid,
+          ),
           builder: (context, snapShot) {
             if (snapShot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapShot.hasError) {
               return Center(child: Text((snapShot.error.toString())));
             } else if (snapShot.hasData) {
-              List<EventModel> events = snapShot.data ?? [];
+              List<EventModel> events =
+                  snapShot.data?.docs.map((e) => e.data()).toList() ?? [];
               return Expanded(
                 child: ListView.separated(
                   separatorBuilder: (_, _) => const SizedBox(height: 16),

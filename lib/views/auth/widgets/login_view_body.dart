@@ -2,6 +2,8 @@ import 'package:evently/core/app_assets.dart';
 import 'package:evently/core/app_routes.dart';
 import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/generated/i18n/app_localizations.dart';
+import 'package:evently/views/auth/models/user_database.dart';
+import 'package:evently/views/auth/models/user_model.dart';
 import 'package:evently/views/auth/widgets/create_accout_button.dart';
 import 'package:evently/views/auth/widgets/divider_section.dart';
 import 'package:evently/views/auth/widgets/login_form.dart';
@@ -35,7 +37,14 @@ class LoginViewBody extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: () async {
                 try {
-                  await FirebaseService().signInWithGoogle();
+                  final credential = await FirebaseService().signInWithGoogle();
+                  UserModel user = UserModel(
+                    email: credential.user!.email.toString(),
+                    id: credential.user?.uid ?? '',
+                    name: credential.user!.displayName!,
+                  );
+
+                  UserDatabase.addUserToFireStore(user);
                   Navigator.of(
                     context,
                   ).pushReplacementNamed(AppRoutes.homeRoute);

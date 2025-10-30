@@ -7,4 +7,5 @@ abstract class AppRoutes {
   static const String forgetPasswordRoute = '/forgetPassword';
   static const String homeRoute = '/home';
   static const String createEventRoute = '/createEvent';
+  static const String eventDetailsRoute = '/eventDetails';
 }

@@ -2,6 +2,7 @@ import 'package:evently/core/app_colors.dart';
 import 'package:evently/core/app_routes.dart';
 import 'package:evently/l10n/generated/i18n/app_localizations.dart';
 import 'package:evently/views/home/provider/bottom_nav_provider.dart';
+import 'package:evently/views/home/tabs/favorite_tab/favorite_tab.dart';
 import 'package:evently/views/home/tabs/home_tab/home_tab.dart';
 import 'package:evently/views/home/tabs/profile_tab/profile_tab.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class HomeView extends StatelessWidget {
     List<Widget> tabs = [
       const HomeTab(),
       const Center(child: Text("plus")),
-      const Center(child: Text("Profile")),
+      const FavoriteTab(),
       const ProfileTab(),
     ];
     return ChangeNotifierProvider(

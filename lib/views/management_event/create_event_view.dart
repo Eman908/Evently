@@ -1,5 +1,6 @@
 import 'package:evently/core/app_dialog.dart';
 import 'package:evently/firebase/event_data_base.dart';
+import 'package:evently/l10n/generated/i18n/app_localizations.dart';
 import 'package:evently/views/home/models/category_model.dart';
 import 'package:evently/views/management_event/models/event_model.dart';
 import 'package:evently/views/management_event/provider/event_provider.dart';
@@ -7,23 +8,36 @@ import 'package:evently/views/management_event/widgets/data_row.dart';
 import 'package:evently/views/management_event/widgets/event_app_bar.dart';
 import 'package:evently/views/management_event/widgets/text_field_with_title.dart';
 import 'package:evently/views/onboarding/provider/toggle_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CreateEventView extends StatelessWidget {
+class CreateEventView extends StatefulWidget {
   const CreateEventView({super.key});
 
   @override
+  State<CreateEventView> createState() => _CreateEventViewState();
+}
+
+class _CreateEventViewState extends State<CreateEventView> {
+  TextEditingController title = TextEditingController();
+  TextEditingController description = TextEditingController();
+  @override
+  void dispose() {
+    title.dispose();
+    description.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController title = TextEditingController();
-    TextEditingController description = TextEditingController();
     var theme = Theme.of(context);
     var provider = Provider.of<ToggleProvider>(context);
     var eventProvider = Provider.of<EventProvider>(context);
-
+    var local = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: eventAppBar(context, title: 'Create Event'),
+      appBar: eventAppBar(context, title: local.create_event),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
@@ -93,23 +107,23 @@ class CreateEventView extends StatelessWidget {
           ),
           TextFieldWithTitle(
             controller: title,
-            hint: 'Event Title',
-            title: 'Title',
+            hint: local.event_title,
+            title: local.title,
             icon: true,
           ),
           const SizedBox(height: 16),
 
           TextFieldWithTitle(
             controller: description,
-            hint: 'Event Description',
-            title: 'Description',
+            hint: local.event_description,
+            title: local.description,
             maxLines: 5,
           ),
           const SizedBox(height: 16),
 
           DataRowWidget(
             iconData: Icons.date_range,
-            title: 'Event Date',
+            title: local.event_date,
             info:
                 eventProvider.selectedDate == null
                     ? 'Choose Date'
@@ -131,7 +145,7 @@ class CreateEventView extends StatelessWidget {
 
           DataRowWidget(
             iconData: Icons.schedule,
-            title: 'Event Time',
+            title: local.event_time,
             info:
                 eventProvider.selectedTime == null
                     ? 'Choose Time'
@@ -201,6 +215,7 @@ class CreateEventView extends StatelessWidget {
                         ).millisecondsSinceEpoch,
                     title: title.text,
                   ),
+                  FirebaseAuth.instance.currentUser!.uid,
                 );
                 Navigator.pop(context);
                 AppDialog.showInfoDialog(
@@ -222,7 +237,7 @@ class CreateEventView extends StatelessWidget {
                 );
               }
             },
-            child: const Text('Add Event'),
+            child: Text(local.add_event),
           ),
         ],
       ),

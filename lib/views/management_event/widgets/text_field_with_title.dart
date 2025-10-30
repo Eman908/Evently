@@ -22,7 +22,6 @@ class TextFieldWithTitle extends StatelessWidget {
         Text(title, style: Theme.of(context).textTheme.bodyLarge),
         TextFormField(
           controller: controller,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return "This Cannot be empty";

@@ -1,5 +1,7 @@
 import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/generated/i18n/app_localizations.dart';
+import 'package:evently/views/auth/models/user_database.dart';
+import 'package:evently/views/auth/models/user_model.dart';
 import 'package:evently/views/auth/widgets/custom_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -144,12 +146,19 @@ class RegisterForm extends StatelessWidget {
                       isLoading.value = true;
                       if (formKey.currentState!.validate()) {
                         try {
-                          await FirebaseService().registerUser(
-                            name: nameText.text,
+                          final credential = await FirebaseService()
+                              .registerUser(
+                                name: nameText.text,
+                                email: emailText.text,
+                                password: passwordText.text,
+                              );
+                          UserModel user = UserModel(
                             email: emailText.text,
-                            password: passwordText.text,
+                            id: credential.user?.uid ?? '',
+                            name: nameText.text,
                           );
 
+                          UserDatabase.addUserToFireStore(user);
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

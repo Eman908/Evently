@@ -109,4 +109,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get home => 'Home';
+
+  @override
+  String get welcome => 'Welcome Back';
+
+  @override
+  String get create_event => 'Create Event';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get event_title => 'Event Title';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get event_description => 'Event Description';
+
+  @override
+  String get event_date => 'Event Date';
+
+  @override
+  String get event_time => 'Event Time';
+
+  @override
+  String get add_event => 'Add Event';
 }

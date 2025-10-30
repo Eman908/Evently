@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 String capitalizeEachWord(String text) {
   return text
       .split(' ')
@@ -13,5 +15,12 @@ String capitalizeEachWord(String text) {
 extension DateTimeNow on DateTime {
   DateTime get dateOnly {
     return DateTime(year, month, day);
+  }
+}
+
+extension IntDateFormat on int {
+  String get formattedDate {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(this);
+    return DateFormat("dd\nMMM").format(date);
   }
 }
