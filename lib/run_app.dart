@@ -6,6 +6,7 @@ import 'package:evently/views/auth/login_view.dart';
 import 'package:evently/views/auth/register_view.dart';
 import 'package:evently/views/home/home_view.dart';
 import 'package:evently/views/management_event/create_event_view.dart';
+import 'package:evently/views/management_event/edit_event_view.dart';
 import 'package:evently/views/management_event/event_details_view.dart';
 import 'package:evently/views/management_event/provider/event_provider.dart';
 import 'package:evently/views/onboarding/intro_view.dart';
@@ -48,6 +49,7 @@ class Evently extends StatelessWidget {
             AppRoutes.homeRoute: (context) => const HomeView(),
             AppRoutes.createEventRoute: (context) => const CreateEventView(),
             AppRoutes.eventDetailsRoute: (context) => const EventDetailsView(),
+            AppRoutes.editEventRoute: (context) => const EditEventView(),
             AppRoutes.forgetPasswordRoute:
                 (context) => const ForgetPasswordView(),
           },

@@ -352,6 +352,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Event'**
   String get add_event;
+
+  /// No description provided for @edit_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Event'**
+  String get edit_event;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @event_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Details'**
+  String get event_details;
+
+  /// No description provided for @title_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Title cannot be empty'**
+  String get title_empty;
+
+  /// No description provided for @description_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Description cannot be empty'**
+  String get description_empty;
+
+  /// No description provided for @date_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Date cannot be empty'**
+  String get date_empty;
+
+  /// No description provided for @time_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Time cannot be empty'**
+  String get time_empty;
+
+  /// No description provided for @invalid_data_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Data'**
+  String get invalid_data_title;
+
+  /// No description provided for @try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get try_again;
+
+  /// No description provided for @creating_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating Event...'**
+  String get creating_event;
+
+  /// No description provided for @event_created_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Created Successfully'**
+  String get event_created_successfully;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Deleted'**
+  String get delete;
+
+  /// No description provided for @updateEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Event'**
+  String get updateEvent;
+
+  /// No description provided for @updatingEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating Event...'**
+  String get updatingEvent;
+
+  /// No description provided for @eventUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Updated Successfully'**
+  String get eventUpdatedSuccessfully;
+
+  /// No description provided for @errorUpdatingEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while updating the event.'**
+  String get errorUpdatingEvent;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

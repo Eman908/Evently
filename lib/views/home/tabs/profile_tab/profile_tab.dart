@@ -2,7 +2,8 @@ import 'package:evently/core/app_routes.dart';
 import 'package:evently/firebase/firebase_service.dart';
 import 'package:evently/l10n/generated/i18n/app_localizations.dart';
 import 'package:evently/views/home/tabs/profile_tab/widgets/profile_data.dart';
-import 'package:evently/views/home/tabs/profile_tab/widgets/profile_picture.dart';
+import 'package:evently/views/home/tabs/profile_tab/widgets/profile_pic_widget.dart';
+// import 'package:evently/views/home/tabs/profile_tab/widgets/profile_picture.dart';
 import 'package:evently/views/onboarding/provider/toggle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,7 @@ class ProfileTab extends StatelessWidget {
               spacing: 24,
               children: [
                 //ProfilePicture(),
+                ProfilePicWidget(),
                 ProfileData(),
               ],
             ),

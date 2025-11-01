@@ -68,7 +68,7 @@ class EventCard extends StatelessWidget {
                         );
                       },
                       child: Icon(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: Theme.of(context).colorScheme.primary,
                         eventModel.favoriteEvent
                             ? Icons.favorite
                             : Icons.favorite_border,

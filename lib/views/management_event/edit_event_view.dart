@@ -5,7 +5,6 @@ import 'package:evently/views/home/models/category_model.dart';
 import 'package:evently/views/management_event/models/event_model.dart';
 import 'package:evently/views/management_event/provider/event_provider.dart';
 import 'package:evently/views/management_event/widgets/data_row.dart';
-import 'package:evently/views/management_event/widgets/event_app_bar.dart';
 import 'package:evently/views/management_event/widgets/text_field_with_title.dart';
 import 'package:evently/views/onboarding/provider/toggle_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,21 +12,33 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CreateEventView extends StatefulWidget {
-  const CreateEventView({super.key});
+class EditEventView extends StatefulWidget {
+  const EditEventView({super.key});
 
   @override
-  State<CreateEventView> createState() => _CreateEventViewState();
+  State<EditEventView> createState() => _EditEventViewState();
 }
 
-class _CreateEventViewState extends State<CreateEventView> {
+class _EditEventViewState extends State<EditEventView> {
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
+
+  late EventModel model;
+  late CategoryModel selected;
+  bool _initialized = false;
+
   @override
-  void dispose() {
-    title.dispose();
-    description.dispose();
-    super.dispose();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      model = ModalRoute.of(context)!.settings.arguments as EventModel;
+      title.text = model.title;
+      description.text = model.description;
+      selected = CategoryModel.categories.firstWhere(
+        (e) => e.id == model.category.id,
+      );
+      _initialized = true;
+    }
   }
 
   @override
@@ -35,9 +46,21 @@ class _CreateEventViewState extends State<CreateEventView> {
     var theme = Theme.of(context);
     var provider = Provider.of<ToggleProvider>(context);
     var eventProvider = Provider.of<EventProvider>(context);
+
     var local = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: eventAppBar(context, title: local.create_event),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          style: IconButton.styleFrom(
+            side: const BorderSide(color: Colors.transparent),
+          ),
+          icon: const Icon(Icons.arrow_back),
+        ),
+        title: Text(local.edit_event),
+      ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
@@ -46,7 +69,7 @@ class _CreateEventViewState extends State<CreateEventView> {
             aspectRatio: 361 / 203,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(eventProvider.selected.imagePath),
+              child: Image.asset(selected.imagePath),
             ),
           ),
           DefaultTabController(
@@ -59,7 +82,8 @@ class _CreateEventViewState extends State<CreateEventView> {
               tabAlignment: TabAlignment.start,
               isScrollable: true,
               onTap: (index) {
-                eventProvider.changeSelected(index);
+                selected = CategoryModel.categories[index];
+                setState(() {});
               },
               tabs:
                   CategoryModel.categories
@@ -72,7 +96,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             color:
-                                e.id == eventProvider.selected.id
+                                e.id == selected.id
                                     ? theme.colorScheme.primary
                                     : Colors.transparent,
                             border: Border.all(
@@ -85,7 +109,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                               Icon(
                                 e.iconData,
                                 color:
-                                    e.id == eventProvider.selected.id
+                                    e.id == selected.id
                                         ? Colors.white
                                         : theme.colorScheme.primary,
                               ),
@@ -93,7 +117,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                                 provider.isEn(context) ? e.enName : e.arName,
                                 style: theme.textTheme.bodyLarge!.copyWith(
                                   color:
-                                      e.id == eventProvider.selected.id
+                                      e.id == selected.id
                                           ? Colors.white
                                           : theme.colorScheme.primary,
                                 ),
@@ -124,42 +148,47 @@ class _CreateEventViewState extends State<CreateEventView> {
           DataRowWidget(
             iconData: Icons.date_range,
             title: local.event_date,
-            info:
-                eventProvider.selectedDate == null
-                    ? 'Choose Date'
-                    : DateFormat.yMMMMd(
-                      provider.isEn(context) ? 'en' : 'ar',
-                    ).format(eventProvider.selectedDate!),
-
+            info: DateFormat.yMMMMd(
+              provider.isEn(context) ? 'en' : 'ar',
+            ).format(
+              eventProvider.selectedDate ??
+                  DateTime.fromMillisecondsSinceEpoch(model.date),
+            ),
             onTap: () async {
               DateTime? date = await showDatePicker(
                 context: context,
-                firstDate: DateTime.now(),
-                initialDate: eventProvider.selectedDate ?? DateTime.now(),
+                firstDate: DateTime.fromMillisecondsSinceEpoch(
+                  model.date,
+                ).subtract(const Duration(days: 365)),
+                initialDate:
+                    eventProvider.selectedDate ??
+                    DateTime.fromMillisecondsSinceEpoch(model.date),
                 lastDate: DateTime.now().add(const Duration(days: 365)),
               );
+
               eventProvider.pickDate(date: date);
             },
           ),
+
           const SizedBox(height: 16),
 
           DataRowWidget(
             iconData: Icons.schedule,
             title: local.event_time,
             info:
-                eventProvider.selectedTime == null
-                    ? 'Choose Time'
-                    : DateFormat.jm(
+                eventProvider.selectedTime != null
+                    ? DateFormat.jm(
                       provider.isEn(context) ? 'en' : 'ar',
                     ).format(
                       DateTime(
                         0,
-                        0,
-                        0,
+                        1,
+                        1,
                         eventProvider.selectedTime!.hour,
                         eventProvider.selectedTime!.minute,
                       ),
-                    ),
+                    )
+                    : DateFormat().add_jm().format(DateTime(model.time)),
             onTap: () async {
               TimeOfDay? time = await showTimePicker(
                 context: context,
@@ -172,57 +201,50 @@ class _CreateEventViewState extends State<CreateEventView> {
 
           FilledButton(
             onPressed: () async {
-              String errorMessage = '';
-              if (title.text.isEmpty) {
-                errorMessage += "${local.title_empty}\n";
-              }
-              if (description.text.isEmpty) {
-                errorMessage += "${local.description_empty}\n";
-              }
-              if (eventProvider.selectedDate == null) {
-                errorMessage += "${local.date_empty}\n";
-              }
-              if (eventProvider.selectedTime == null) {
-                errorMessage += "${local.time_empty}\n";
-              }
-              if (errorMessage.isNotEmpty) {
-                AppDialog.showInfoDialog(
-                  context: context,
-                  message: errorMessage,
-                  title: local.invalid_data_title,
-                  posActionTitle: local.try_again,
-                );
-                return;
-              }
+              model = EventModel(
+                id: model.id,
+                title: title.text.trim(),
+                description: description.text.trim(),
+                categoryId: selected.id,
+                date:
+                    (eventProvider.selectedDate ??
+                            DateTime.fromMillisecondsSinceEpoch(model.date))
+                        .millisecondsSinceEpoch,
+                time:
+                    DateTime(
+                      0,
+                      1,
+                      1,
+                      eventProvider.selectedTime?.hour ??
+                          DateTime.fromMillisecondsSinceEpoch(model.time).hour,
+                      eventProvider.selectedTime?.minute ??
+                          DateTime.fromMillisecondsSinceEpoch(
+                            model.time,
+                          ).minute,
+                    ).millisecondsSinceEpoch,
+                favoriteEvent: model.favoriteEvent,
+              );
+
+              setState(() {});
+
               AppDialog.showLoadingDialog(
                 barrierDismissible: false,
                 context: context,
-                loadingMessage: local.creating_event,
+                loadingMessage: local.updatingEvent,
               );
+
               try {
                 EventDataBase event = EventDataBase();
-                await event.createEvent(
-                  EventModel(
-                    categoryId: eventProvider.selected.id,
-                    date: eventProvider.selectedDate!.millisecondsSinceEpoch,
-                    description: description.text,
-                    id: '',
-                    time:
-                        DateTime(
-                          0,
-                          0,
-                          0,
-                          eventProvider.selectedTime!.hour,
-                          eventProvider.selectedTime!.minute,
-                        ).millisecondsSinceEpoch,
-                    title: title.text,
-                  ),
+                await event.updateEvent(
                   FirebaseAuth.instance.currentUser!.uid,
+                  model,
                 );
+
                 Navigator.pop(context);
+
                 AppDialog.showInfoDialog(
                   context: context,
-                  message: local.event_created_successfully,
+                  message: local.eventUpdatedSuccessfully,
                   title: local.success,
                   posActionTitle: local.ok,
                   posAction: () {
@@ -239,7 +261,8 @@ class _CreateEventViewState extends State<CreateEventView> {
                 );
               }
             },
-            child: Text(local.add_event),
+
+            child: Text(local.updateEvent),
           ),
         ],
       ),

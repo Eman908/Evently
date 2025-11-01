@@ -1,4 +1,5 @@
 import 'package:evently/firebase/event_data_base.dart';
+import 'package:evently/l10n/generated/i18n/app_localizations.dart';
 import 'package:evently/views/home/tabs/favorite_tab/provider/search_provider.dart';
 import 'package:evently/views/management_event/models/event_model.dart';
 import 'package:evently/views/management_event/widgets/event_card.dart';
@@ -27,9 +28,9 @@ class FavoriteTab extends StatelessWidget {
                   onChanged: (value) {
                     provider.setSearchText(value);
                   },
-                  decoration: const InputDecoration(
-                    hintText: "search",
-                    prefixIcon: Icon(Icons.search),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.search,
+                    prefixIcon: const Icon(Icons.search),
                   ),
                 ),
               ),

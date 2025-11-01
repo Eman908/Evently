@@ -8,10 +8,14 @@ class TextFieldWithTitle extends StatelessWidget {
     required this.hint,
     this.maxLines = 1,
     this.controller,
+    this.label,
+    this.onChanged,
   });
   final String title, hint;
   final bool? icon;
+  final String? label;
   final int? maxLines;
+  final void Function(String)? onChanged;
   final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
@@ -29,8 +33,10 @@ class TextFieldWithTitle extends StatelessWidget {
               return '';
             }
           },
+          onChanged: onChanged,
           maxLines: maxLines,
           decoration: InputDecoration(
+            labelText: label,
             prefixIcon: icon == null ? null : const Icon(Icons.edit),
             hintText: hint,
           ),

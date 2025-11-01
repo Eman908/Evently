@@ -136,4 +136,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get add_event => 'إضافة الحدث';
+
+  @override
+  String get edit_event => 'تعديل الحدث';
+
+  @override
+  String get search => 'بحث';
+
+  @override
+  String get event_details => 'تفاصيل الحدث';
+
+  @override
+  String get title_empty => 'العنوان لا يمكن أن يكون فارغًا';
+
+  @override
+  String get description_empty => 'الوصف لا يمكن أن يكون فارغًا';
+
+  @override
+  String get date_empty => 'التاريخ لا يمكن أن يكون فارغًا';
+
+  @override
+  String get time_empty => 'الوقت لا يمكن أن يكون فارغًا';
+
+  @override
+  String get invalid_data_title => 'بيانات غير صالحة';
+
+  @override
+  String get try_again => 'حاول مرة أخرى';
+
+  @override
+  String get creating_event => 'جارٍ إنشاء الحدث...';
+
+  @override
+  String get event_created_successfully => 'تم إنشاء الحدث بنجاح';
+
+  @override
+  String get success => 'نجاح';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get ok => 'حسنًا';
+
+  @override
+  String get delete => 'تم حذف الحدث';
+
+  @override
+  String get updateEvent => 'تحديث الحدث';
+
+  @override
+  String get updatingEvent => 'جارٍ تحديث الحدث...';
+
+  @override
+  String get eventUpdatedSuccessfully => 'تم تحديث الحدث بنجاح';
+
+  @override
+  String get errorUpdatingEvent => 'حدث خطأ أثناء تحديث الحدث.';
 }

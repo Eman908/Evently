@@ -8,4 +8,5 @@ abstract class AppRoutes {
   static const String homeRoute = '/home';
   static const String createEventRoute = '/createEvent';
   static const String eventDetailsRoute = '/eventDetails';
+  static const String editEventRoute = '/editEvent';
 }

@@ -41,6 +41,13 @@ class EventDataBase {
     return event;
   }
 
+  Stream<DocumentSnapshot<EventModel>> getEventStreamEdited(
+    String uId,
+    EventModel model,
+  ) {
+    return getCollectionReference(uId).doc(model.id).snapshots();
+  }
+
   Stream<QuerySnapshot<EventModel>> getEventStream(
     CategoryModel cM,
     String uId,
@@ -78,5 +85,10 @@ class EventDataBase {
   Future<void> deleteEvent(String uId, EventModel event) async {
     var collectionReference = getCollectionReference(uId);
     return collectionReference.doc(event.id).delete();
+  }
+
+  Future<void> updateEvent(String uId, EventModel event) async {
+    var collectionReference = getCollectionReference(uId);
+    await collectionReference.doc(event.id).update(event.toFirestore());
   }
 }

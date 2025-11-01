@@ -136,4 +136,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get add_event => 'Add Event';
+
+  @override
+  String get edit_event => 'Edit Event';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get event_details => 'Event Details';
+
+  @override
+  String get title_empty => 'Title cannot be empty';
+
+  @override
+  String get description_empty => 'Description cannot be empty';
+
+  @override
+  String get date_empty => 'Date cannot be empty';
+
+  @override
+  String get time_empty => 'Time cannot be empty';
+
+  @override
+  String get invalid_data_title => 'Invalid Data';
+
+  @override
+  String get try_again => 'Try Again';
+
+  @override
+  String get creating_event => 'Creating Event...';
+
+  @override
+  String get event_created_successfully => 'Event Created Successfully';
+
+  @override
+  String get success => 'Success';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get delete => 'Event Deleted';
+
+  @override
+  String get updateEvent => 'Update Event';
+
+  @override
+  String get updatingEvent => 'Updating Event...';
+
+  @override
+  String get eventUpdatedSuccessfully => 'Event Updated Successfully';
+
+  @override
+  String get errorUpdatingEvent => 'An error occurred while updating the event.';
 }
