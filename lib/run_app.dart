@@ -39,7 +39,7 @@ class Evently extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           theme: AppTheme.lightTheme,
           themeMode: provider.appTheme,
-
+          debugShowCheckedModeBanner: false,
           routes: {
             AppRoutes.splashRoute: (context) => const SplashView(),
             AppRoutes.onBoardingRoute: (context) => const OnBoardingView(),

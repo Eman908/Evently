@@ -56,7 +56,6 @@ class EventDetailsView extends StatelessWidget {
                   FirebaseAuth.instance.currentUser!.uid,
                   model,
                 );
-                Navigator.pop(context);
               } catch (e) {
                 Navigator.pop(context);
                 AppDialog.showInfoDialog(
