@@ -90,25 +90,25 @@ class LoginForm extends StatelessWidget {
                               password: passwordText.text,
                             );
 
-                        final user = userCredential.user;
-                        if (user != null && !user.emailVerified) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                "Please verify your email before logging in.",
-                              ),
-                            ),
-                          );
-                          await user.sendEmailVerification();
-                          await FirebaseAuth.instance.signOut();
-                          return;
-                        }
+                        // final user = userCredential.user;
+                        // if (user != null && !user.emailVerified) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(
+                        //       content: Text(
+                        //         "Please verify your email before logging in.",
+                        //       ),
+                        //     ),
+                        //   );
+                        //   await user.sendEmailVerification();
+                        //   await FirebaseAuth.instance.signOut();
+                        //   return;
+                        // }
 
-                        if (context.mounted) {
-                          Navigator.of(
-                            context,
-                          ).pushReplacementNamed(AppRoutes.homeRoute);
-                        }
+                        // if (context.mounted) {
+                        //   Navigator.of(
+                        //     context,
+                        //   ).pushReplacementNamed(AppRoutes.homeRoute);
+                        // }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'wrong-password') {
                           ScaffoldMessenger.of(context).showSnackBar(

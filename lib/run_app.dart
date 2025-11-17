@@ -1,6 +1,7 @@
 import 'package:evently/core/app_routes.dart';
 import 'package:evently/core/app_theme.dart';
 import 'package:evently/l10n/generated/i18n/app_localizations.dart';
+import 'package:evently/main.dart';
 import 'package:evently/views/auth/forget_password_view.dart';
 import 'package:evently/views/auth/login_view.dart';
 import 'package:evently/views/auth/register_view.dart';
@@ -13,11 +14,25 @@ import 'package:evently/views/onboarding/intro_view.dart';
 import 'package:evently/views/onboarding/on_boarding_view.dart';
 import 'package:evently/views/onboarding/provider/toggle_provider.dart';
 import 'package:evently/views/splash/splash_view.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Evently extends StatelessWidget {
+class Evently extends StatefulWidget {
   const Evently({super.key});
+
+  @override
+  State<Evently> createState() => _EventlyState();
+}
+
+class _EventlyState extends State<Evently> {
+  @override
+  void initState() {
+    FirebaseMessaging.onMessage.listen((message) {
+      showFlutterNotification(message);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
