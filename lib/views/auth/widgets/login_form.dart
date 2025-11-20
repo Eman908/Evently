@@ -90,7 +90,7 @@ class LoginForm extends StatelessWidget {
                               password: passwordText.text,
                             );
 
-                        // final user = userCredential.user;
+                        final user = userCredential.user;
                         // if (user != null && !user.emailVerified) {
                         //   ScaffoldMessenger.of(context).showSnackBar(
                         //     const SnackBar(
@@ -104,11 +104,11 @@ class LoginForm extends StatelessWidget {
                         //   return;
                         // }
 
-                        // if (context.mounted) {
-                        //   Navigator.of(
-                        //     context,
-                        //   ).pushReplacementNamed(AppRoutes.homeRoute);
-                        // }
+                        if (context.mounted) {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.homeRoute);
+                        }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'wrong-password') {
                           ScaffoldMessenger.of(context).showSnackBar(

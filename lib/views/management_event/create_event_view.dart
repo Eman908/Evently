@@ -201,7 +201,7 @@ class _CreateEventViewState extends State<CreateEventView> {
               );
               try {
                 EventDataBase event = EventDataBase();
-                await event.createEvent(
+                event.createEvent(
                   EventModel(
                     categoryId: eventProvider.selected.id,
                     date: eventProvider.selectedDate!.millisecondsSinceEpoch,
@@ -209,11 +209,11 @@ class _CreateEventViewState extends State<CreateEventView> {
                     id: '',
                     time:
                         DateTime(
-                          0,
-                          0,
-                          0,
-                          eventProvider.selectedTime!.hour,
-                          eventProvider.selectedTime!.minute,
+                          eventProvider.selectedDate!.year,
+                          eventProvider.selectedDate!.month,
+                          eventProvider.selectedDate!.day,
+                          eventProvider.selectedDate!.hour,
+                          eventProvider.selectedDate!.minute,
                         ).millisecondsSinceEpoch,
                     title: title.text,
                   ),

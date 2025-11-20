@@ -235,7 +235,7 @@ class _EditEventViewState extends State<EditEventView> {
 
               try {
                 EventDataBase event = EventDataBase();
-                await event.updateEvent(
+                event.updateEvent(
                   FirebaseAuth.instance.currentUser!.uid,
                   model,
                 );

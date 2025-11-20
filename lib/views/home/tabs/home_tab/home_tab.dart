@@ -59,7 +59,8 @@ class HomeTab extends StatelessWidget {
                         ),
                         Text(
                           capitalizeEachWord(
-                            FirebaseAuth.instance.currentUser!.displayName!,
+                            FirebaseAuth.instance.currentUser!.displayName ??
+                                'LOLO',
                           ),
                           style: theme.textTheme.titleLarge!.copyWith(
                             color: theme.colorScheme.onPrimary,

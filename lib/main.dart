@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/firebase/fcm_services.dart';
 import 'package:evently/firebase_options.dart';
 import 'package:evently/run_app.dart';
@@ -82,7 +83,9 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+  );
   await setupFlutterNotifications();
   var per = await Permission.notification.isDenied;
   if (per) {

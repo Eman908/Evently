@@ -14,7 +14,9 @@ class ProfileData extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          capitalizeEachWord(FirebaseAuth.instance.currentUser!.displayName!),
+          capitalizeEachWord(
+            FirebaseAuth.instance.currentUser!.displayName ?? "LOLO",
+          ),
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
             color: AppColors.white,
             fontWeight: FontWeight.bold,

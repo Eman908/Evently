@@ -18,7 +18,7 @@ class FirebaseService {
       password: password,
     );
     await userData.user?.updateDisplayName(name);
-    await userData.user?.sendEmailVerification();
+    // await userData.user?.sendEmailVerification();
     return userData;
   }
 
@@ -37,13 +37,13 @@ class FirebaseService {
     await userData.user?.reload();
     final user = FirebaseAuth.instance.currentUser;
 
-    if (user != null && !user.emailVerified) {
-      await FirebaseAuth.instance.signOut();
-      throw FirebaseAuthException(
-        code: 'email-not-verified',
-        message: 'Please verify your email before logging in.',
-      );
-    }
+    // if (user != null && !user.emailVerified) {
+    //   await FirebaseAuth.instance.signOut();
+    //   throw FirebaseAuthException(
+    //     code: 'email-not-verified',
+    //     message: 'Please verify your email before logging in.',
+    //   );
+    // }
 
     return userData;
   }
